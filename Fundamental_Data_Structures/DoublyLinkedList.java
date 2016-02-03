@@ -1,5 +1,5 @@
 package Fundamental_Data_Structures;
-
+import java.util.*;
 public class DoublyLinkedList<E> {
 	private static class Node<E> {
 		public E val;
@@ -62,6 +62,40 @@ public class DoublyLinkedList<E> {
 		return e;
 	}
 
+	private class NodeIterator implements Iterator<Node<E>> {
+		private Node<E> cur = header.next;
+		private Node<E> pre = null;
+		public boolean hasNext() {return cur != tail;}
+		public Node<E> next() throws NoSuchElementException{
+			if(cur == tail) throw new NoSuchElementException("nothing left");
+			pre = cur;
+			cur = cur.next;
+			return pre;
+		}
+		public void remove() throws IllegalStateException{
+			if(pre == null) throw new IllegalStateException("nothing to remove");
+			DoublyLinkedList.this.remove(pre);
+			pre = null;
+		}
+	}
+	
+	public class Nodes implements Iterable<Node<E>> {
+		public Iterator<Node<E>> iterator() {return new NodeIterator();}
+	}
+	
+	private class ElementIterator implements Iterator<E> {
+		private NodeIterator ni = new NodeIterator();
+		public boolean hasNext() {return ni.hasNext();};
+		public E next() {return ni.next().val;}
+		public void remove() {ni.remove();}
+		
+	}
+	
+	private class ElementIterable implements Iterable<E> {
+		public Iterator<E> iterator() { return new ElementIterator();}
+	}
+	public Iterable<E> elements() { return new ElementIterable();}
+	
 	public String toString() {
 		String result = "";
 		if(size == 0) return result;

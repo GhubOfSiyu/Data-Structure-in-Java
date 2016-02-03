@@ -1,4 +1,4 @@
-package Fundamental_Data_Structure;
+package Fundamental_Data_Structures;
 import java.util.*;
 class Stack<E> {
 	private LinkedList<E> head = new LinkedList<E>();
