@@ -17,7 +17,10 @@ abstract class AbstractBinaryTree<E> extends AbstractTree<E> implements BinaryTr
 	
 	public int numChildren(Node<E> n) throws IllegalArgumentException {
 		if(n == null) throw new IllegalArgumentException("node not exist");
-		return (left(n) == null ? 0 : 1) + (right(n) == null ? 0 : 1);
+		int cnt = 0;
+		if(left(n) != null) cnt++;
+		if(right(n) != null) cnt++;
+		return cnt;
 	}
 	
 	public Iterable<Node<E>> children(Node<E> n) {
